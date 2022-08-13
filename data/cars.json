@@ -1,0 +1,141 @@
+[
+  {
+    "model": "BMW",
+    "price": 120,
+    "color": "BLACK",
+    "mileage": 1500,
+    "components": [
+      "ABS",
+      "ALLOY WHEELS"
+    ]
+  },
+  {
+    "model": "MAZDA",
+    "price": 160,
+    "color": "WHITE",
+    "mileage": 2500,
+    "components": [
+      "AIR CONDITIONING",
+      "BLUETOOTH"
+    ]
+  },
+    {
+    "model": "AUDI",
+    "price": 1205,
+    "color": "SILVER",
+    "mileage": 2000,
+    "components": [
+      "ABS",
+      "ALLOY WHEELS",
+      "AIR CONDITIONING",
+      "RADIO",
+      "CRUISE CONTROL"
+    ]
+  },
+  {
+    "model": "MAZDA",
+    "price": 160,
+    "color": "WHITE",
+    "mileage": 2500,
+    "components": [
+      "AIR CONDITIONING",
+      "BLUETOOTH",
+      "ROOF RACK",
+      "ANDROID AUTO"
+    ]
+  },
+      {
+    "model": "OPEL",
+    "price": 750,
+    "color": "BLACK",
+    "mileage": 6300,
+    "components": [
+      "ABS",
+      "PANORAMIC ROOF",
+      "AIR CONDITIONING",
+      "CRUISE CONTROL"
+    ]
+  },
+  {
+    "model": "SKODA",
+    "price": 1600,
+    "color": "WHITE",
+    "mileage": 2500,
+    "components": [
+      "AIR CONDITIONING",
+      "LEATHER UPHOLSTERY",
+      "ROOF RACK",
+      "ANDROID AUTO"
+    ]
+  },
+    {
+    "model": "MERCEDES",
+    "price": 4580,
+    "color": "BLACK",
+    "mileage": 540,
+    "components": [
+      "ABS",
+      "ALLOY WHEELS",
+      "CRUISE CONTROL"
+    ]
+  },
+  {
+    "model": "NISSAN",
+    "price": 800,
+    "color": "WHITE",
+    "mileage": 3000,
+    "components": [
+      "AIR CONDITIONING",
+      "BLUETOOTH",
+      "ALLOY WHEELS"
+    ]
+  },
+    {
+    "model": "PEUGEOT",
+    "price": 650,
+    "color": "SILVER",
+    "mileage": 450,
+    "components": [
+      "ABS",
+      "ALLOY WHEELS",
+      "RADIO",
+      "CRUISE CONTROL"
+    ]
+  },
+  {
+    "model": "RENAULT",
+    "price": 790,
+    "color": "WHITE",
+    "mileage": 8000,
+    "components": [
+      "AIR CONDITIONING",
+      "ROOF RACK",
+      "ANDROID AUTO"
+    ]
+  },
+      {
+    "model": "SEAT",
+    "price": 1000,
+    "color": "BLACK",
+    "mileage": 1400,
+    "components": [
+      "ABS",
+      "PANORAMIC ROOF",
+      "AIR CONDITIONING",
+      "CRUISE CONTROL",
+      "ANDROID AUTO"
+    ]
+  },
+  {
+    "model": "FORD",
+    "price": 2700,
+    "color": "SILVER",
+    "mileage": 900,
+    "components": [
+      "AIR CONDITIONING",
+      "LEATHER UPHOLSTERY",
+      "ROOF RACK",
+      "ANDROID AUTO"
+    ]
+  }
+]
