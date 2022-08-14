@@ -12,7 +12,7 @@ def validate_price_mileage(value: Decimal | int) -> bool:
     """
     Validate the price and mileage that cannot be less than 0
     """
-    return True if value > 0 else False
+    return True if value >= 0 else False
 
 
 def validate_components(text: str) -> bool:
@@ -26,6 +26,6 @@ def validate_components(text: str) -> bool:
     if not text.replace(' ', '').isupper():
         return False
     for x in text:
-        if not (x == ' ' or x.isalnum()):
+        if not (x == ' ' or x.isalpha()):
             return False
     return True

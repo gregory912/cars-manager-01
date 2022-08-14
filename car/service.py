@@ -1,4 +1,4 @@
-from .model import Car
+from car.model import Car
 from data_loader.json import get_cars
 from operator import attrgetter
 from itertools import groupby, takewhile
@@ -8,7 +8,7 @@ import re
 
 class CarsService:
     def __init__(self, filename: str):
-        self.cars = [car for car in get_cars(filename)]
+        self.cars = get_cars(filename)
 
         # print(self.sort_cars("color", True))
         # print(self.filter_cars_by_mileage(3000))
