@@ -1,8 +1,9 @@
-from .car.service import CarsService
+from car.service import CarsService
 
 
 def main() -> None:
-    filename = 'cars_manager/data/cars.json'
+    filename = r'data/cars.json'
+    cars_service = CarsService(filename)
 
 
 if __name__ == '__main__':
