@@ -1,200 +1,211 @@
-from car.model import *
-from car.service import CarsService
+from car.service import *
 import unittest
-from unittest.mock import patch
+from tests.test_data.data import *
 
 
 class MyTestCase(unittest.TestCase):
-    @patch('car.service.get_cars')
-    def test_sort_cars(self, mock_cars):
+
+    mazda = MAZDA
+    mazda_1 = MAZDA_1
+    bmw = BMW
+    bmw_1 = BMW_1
+    audi = AUDI
+    audi_1 = AUDI_1
+    peugeot = PEUGEOT
+    renault = RENAULT
+    ford = FORD
+    ford_1 = FORD_1
+    seat = SEAT
+    seat_1 = SEAT_1
+
+    def test_sort_cars_by_model(self):
         """
-        Test the sort_cars method for the model and price arguments
+        Test the sort_cars method by the model
         """
-        car_1 = {"model": 'MAZDA', "price": 160, "mileage": 2500, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'BMW', "price": 160, "mileage": 2500, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'AUDI', "price": 160, "mileage": 2500, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3)]
+        car_service = CarsService([self.mazda, self.bmw, self.audi])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertNotEqual(car_service.cars, car_service.sort_cars(SortType.MODEL),
+                            'Method test_sort_cars_by_model return wrong values.')
 
-        self.assertNotEqual(cars, car_service.sort_cars("model"),
-                            'Method sort_cars return wrong values for argument model.')
-        self.assertEqual(cars, car_service.sort_cars("model", True),
-                         'Method sort_cars return wrong values for argument model.')
-
-        self.assertNotEqual(cars, car_service.sort_cars("color"),
-                            'Method sort_cars return wrong values for argument color.')
-        self.assertEqual(cars, car_service.sort_cars("color", True),
-                         'Method sort_cars return wrong values for argument color.')
-
-    @patch('car.service.get_cars')
-    def test_filter_cars_by_mileage(self, mock_cars):
+    def test_sort_cars_by_model_descending(self):
         """
-        Test the filter_cars_by_mileage method for values 2000 and 3000
+        Test the sort_cars method by the model descending
         """
-        car_1 = {"model": 'MAZDA', "price": 160, "mileage": 5000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'BMW', "price": 160, "mileage": 3000, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'AUDI', "price": 160, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3)]
+        car_service = CarsService([self.mazda, self.bmw, self.audi])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(car_service.cars, car_service.sort_cars(SortType.MODEL, True),
+                         'Method test_sort_cars_by_model_descending return wrong values.')
+
+    def test_sort_cars_by_color(self):
+        """
+        Test the sort_cars method by the color
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.audi])
+
+        self.assertNotEqual(car_service.cars, car_service.sort_cars(SortType.COLOR),
+                            'Method test_sort_cars_by_color return wrong values.')
+
+    def test_sort_cars_by_color_descending(self):
+        """
+        Test the sort_cars method by the color descending
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.audi])
+
+        self.assertEqual(car_service.cars, car_service.sort_cars(SortType.COLOR, True),
+                         'Method test_sort_cars_by_color_descending return wrong values.')
+
+    def test_filter_cars_by_mileage_2000(self):
+        """
+        Test the filter_cars_by_mileage method for value 2000
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.audi])
 
         self.assertEqual(2, len(car_service.filter_cars_by_mileage(2000)),
-                         'Method filter_cars_by_mileage return wrong values.')
+                         'Method test_filter_cars_by_mileage_2000 return wrong values.')
+
+    def test_filter_cars_by_mileage_3000(self):
+        """
+        Test the filter_cars_by_mileage method for value 3000
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.audi])
+
         self.assertEqual(1, len(car_service.filter_cars_by_mileage(3000)),
-                         'Method filter_cars_by_mileage return wrong values.')
+                         'Method test_filter_cars_by_mileage_3000 return wrong values.')
 
-    @patch('car.service.get_cars')
-    def test_number_of_cars_with_the_same_color(self, mock_cars):
+    def test_get_number_of_cars_with_the_same_color_silver(self):
         """
-        Test the number_of_cars_with_the_same_color method for WHITE and BLACK
+        Test the get_number_of_cars_with_the_same_color method for SILVER color
         """
-        car_1 = {"model": 'MAZDA', "price": 160, "mileage": 5000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'BMW', "price": 160, "mileage": 3000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'AUDI', "price": 160, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        car_4 = {"model": 'AUDI', "price": 160, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3), Car(**car_4)]
+        car_service = CarsService([self.mazda, self.bmw, self.audi, self.peugeot, self.renault])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(2, car_service.get_number_of_cars_with_the_same_color()[Color.SILVER],
+                         'Method test_get_number_of_cars_with_the_same_color_silver return wrong values.')
 
-        self.assertEqual(2, car_service.number_of_cars_with_the_same_color()[Color.BLACK],
-                         'Method number_of_cars_with_the_same_color return wrong values.')
-        self.assertEqual(2, car_service.number_of_cars_with_the_same_color()[Color.WHITE],
-                         'Method number_of_cars_with_the_same_color return wrong values.')
-
-    @patch('car.service.get_cars')
-    def test_model_with_the_most_expensive_car(self, mock_cars):
+    def test_get_number_of_cars_with_the_same_color_white(self):
         """
-        Test model_with_the_most_expensive_car method for MAZDA, BMW, AUDI
+        Test the get_number_of_cars_with_the_same_color method for WHITE color
         """
-        car_1 = {"model": 'MAZDA', "price": 1000, "mileage": 5000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'MAZDA', "price": 2000, "mileage": 5000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'BMW', "price": 3000, "mileage": 3000, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_4 = {"model": 'BMW', "price": 1500, "mileage": 3000, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_5 = {"model": 'AUDI', "price": 1500, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        car_6 = {"model": 'AUDI', "price": 3000, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3), Car(**car_4), Car(**car_5), Car(**car_6)]
+        car_service = CarsService([self.mazda, self.bmw, self.audi, self.peugeot, self.renault])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(2, car_service.get_number_of_cars_with_the_same_color()[Color.WHITE],
+                         'Method test_get_number_of_cars_with_the_same_color_white return wrong values.')
 
-        self.assertEqual(3000, car_service.model_with_the_most_expensive_car()['AUDI'].price,
-                         'Method model_with_the_most_expensive_car return wrong values.')
-        self.assertEqual(3000, car_service.model_with_the_most_expensive_car()['BMW'].price,
-                         'Method model_with_the_most_expensive_car return wrong values.')
-        self.assertEqual(2000, car_service.model_with_the_most_expensive_car()['MAZDA'].price,
-                         'Method model_with_the_most_expensive_car return wrong values.')
-
-    @patch('car.service.get_cars')
-    def test_statistics_of_cars(self, mock_cars):
+    def test_get_model_with_the_most_expensive_car_audi(self):
         """
-        Test the statistics_of_cars method for the entered data
+        Test get_model_with_the_most_expensive_car_audi method for MAZDA, BMW, AUDI
         """
-        car_1 = {"model": 'MAZDA', "price": 3000, "mileage": 1000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'MAZDA', "price": 2500, "mileage": 2000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'BMW', "price": 1500, "mileage": 2500, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_4 = {"model": 'BMW', "price": 2500, "mileage": 3000, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_5 = {"model": 'AUDI', "price": 3000, "mileage": 2000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        car_6 = {"model": 'AUDI', "price": 4000, "mileage": 1500, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3), Car(**car_4), Car(**car_5), Car(**car_6)]
+        car_service = CarsService([self.mazda, self.mazda_1, self.bmw, self.bmw_1, self.audi, self.audi_1])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(250, car_service.get_model_with_the_most_expensive_car()['AUDI'].price,
+                         'Method test_get_model_with_the_most_expensive_car_audi return wrong values.')
 
-        """PRICE"""
-        self.assertEqual(1500, car_service.statistics_of_cars()[0][0], 'Method statistics_of_cars return wrong values.')
-        self.assertEqual(2750, car_service.statistics_of_cars()[0][1], 'Method statistics_of_cars return wrong values.')
-        self.assertEqual(4000, car_service.statistics_of_cars()[0][2], 'Method statistics_of_cars return wrong values.')
-
-        """MILEAGE"""
-        self.assertEqual(1000, car_service.statistics_of_cars()[1][0], 'Method statistics_of_cars return wrong values.')
-        self.assertEqual(2000, car_service.statistics_of_cars()[1][1], 'Method statistics_of_cars return wrong values.')
-        self.assertEqual(3000, car_service.statistics_of_cars()[1][2], 'Method statistics_of_cars return wrong values.')
-
-    @patch('car.service.get_cars')
-    def test_the_most_expensive_cars(self, mock_cars):
+    def test_get_model_with_the_most_expensive_car_bmw(self):
         """
-        Test the_most_expensive_cars method for values 2000, 1800, 2000
+        Test get_model_with_the_most_expensive_car_audi method for MAZDA, BMW, AUDI
         """
-        car_1 = {"model": 'MAZDA', "price": 2000, "mileage": 5000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'BMW', "price": 1800, "mileage": 3000, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'AUDI', "price": 2000, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3)]
+        car_service = CarsService([self.mazda, self.mazda_1, self.bmw, self.bmw_1, self.audi, self.audi_1])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(400, car_service.get_model_with_the_most_expensive_car()['BMW'].price,
+                         'Method test_get_model_with_the_most_expensive_car_bmw return wrong values.')
 
-        self.assertEqual(2, len(car_service.the_most_expensive_cars()),
-                         'Method the_most_expensive_cars return wrong values.')
-        self.assertEqual(2000, car_service.the_most_expensive_cars()[0].price,
-                         'Method the_most_expensive_cars return wrong values.')
-
-    @patch('car.service.get_cars')
-    def test_cars_with_sorted_list_of_components(self, mock_cars):
+    def test_get_model_with_the_most_expensive_car_mazda(self):
         """
-        Test the cars_with_sorted_list_of_components method for the entered data
+        Test get_model_with_the_most_expensive_car_audi method for MAZDA, BMW, AUDI
         """
-        car_1 = {"model": 'MAZDA', "price": 2000, "mileage": 5000, "color": "WHITE", "components": [
-            'ROOF RACK', 'AIR CONDITIONING', 'PANORAMIC ROOF']}
-        car_2 = {"model": 'BMW', "price": 1800, "mileage": 3000, "color": "SILVER", "components": [
-            'AIR CONDITIONING', 'CRUISE CONTROL', 'ABS', 'RADIO']}
-        cars = [Car(**car_1), Car(**car_2)]
+        car_service = CarsService([self.mazda, self.mazda_1, self.bmw, self.bmw_1, self.audi, self.audi_1])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(300, car_service.get_model_with_the_most_expensive_car()['MAZDA'].price,
+                         'Method test_get_model_with_the_most_expensive_car_mazda return wrong values.')
 
-        car_1_sorted = {"model": 'MAZDA', "price": 2000, "mileage": 5000, "color": "WHITE", "components": [
-            'AIR CONDITIONING', 'PANORAMIC ROOF', 'ROOF RACK']}
-        car_2_sorted = {"model": 'BMW', "price": 1800, "mileage": 3000, "color": "SILVER", "components": [
-            'ABS', 'AIR CONDITIONING', 'CRUISE CONTROL', 'RADIO']}
-        cars_sorted = [Car(**car_1_sorted), Car(**car_2_sorted)]
-
-        self.assertEqual(cars_sorted, car_service.cars_with_sorted_list_of_components(),
-                         'Method cars_with_sorted_list_of_components return wrong values.')
-
-    @patch('car.service.get_cars')
-    def test_component_as_key_and_value_as_cars_which_have_this_component(self, mock_cars):
+    def test_get_statistics_of_cars_for_prices(self):
         """
-        Test the component_as_key_and_value_as_cars_which_have_this_component method for ABS and RADIO components
+        Test the get_statistics_of_cars_for_prices method for prices
         """
-        car_1 = {"model": 'MAZDA', "price": 1500, "mileage": 1000, "color": "WHITE", "components": ['ABS']}
-        car_2 = {"model": 'MAZDA', "price": 2500, "mileage": 2000, "color": "WHITE", "components": ['ABS']}
-        car_3 = {"model": 'BMW', "price": 1500, "mileage": 2500, "color": "SILVER", "components": ['ABS']}
-        car_4 = {"model": 'BMW', "price": 2500, "mileage": 3000, "color": "SILVER", "components": ['RADIO']}
-        car_5 = {"model": 'AUDI', "price": 3000, "mileage": 2000, "color": "BLACK", "components": ['RADIO']}
-        car_6 = {"model": 'AUDI', "price": 4000, "mileage": 1500, "color": "BLACK", "components": ['RADIO', 'ABS']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3), Car(**car_4), Car(**car_5), Car(**car_6)]
+        car_service = CarsService([self.mazda, self.mazda_1, self.bmw, self.bmw_1, self.audi])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(160, car_service.get_statistics_of_cars()[0][0],
+                         'Method test_get_statistics_of_cars_for_prices return wrong values.')
+        self.assertEqual(236, car_service.get_statistics_of_cars()[0][1],
+                         'Method test_get_statistics_of_cars_for_prices return wrong values.')
+        self.assertEqual(400, car_service.get_statistics_of_cars()[0][2],
+                         'Method test_get_statistics_of_cars_for_prices return wrong values.')
 
-        self.assertEqual(3, len(car_service.component_as_key_and_value_as_cars_which_have_this_component()['RADIO']),
-                         'Method component_as_key_and_value_as_cars_which_have_this_component return wrong values.')
-        self.assertEqual(4, len(car_service.component_as_key_and_value_as_cars_which_have_this_component()['ABS']),
-                         'Method component_as_key_and_value_as_cars_which_have_this_component return wrong values.')
-
-    @patch('car.service.get_cars')
-    def test_cars_with_indicated_price(self, mock_cars):
+    def test_get_statistics_of_cars_for_mileages(self):
         """
-        Test the cars_with_indicated_price method for 1000, 1500, 2100
+        Test the get_statistics_of_cars_for_prices method for mileages
         """
-        car_1 = {"model": 'MAZDA', "price": 1000, "mileage": 5000, "color": "WHITE", "components": ['AIR CONDITIONING']}
-        car_2 = {"model": 'BMW', "price": 1500, "mileage": 3000, "color": "SILVER", "components": ['AIR CONDITIONING']}
-        car_3 = {"model": 'AUDI', "price": 2100, "mileage": 1000, "color": "BLACK", "components": ['AIR CONDITIONING']}
-        cars = [Car(**car_1), Car(**car_2), Car(**car_3)]
+        car_service = CarsService([self.mazda, self.mazda_1, self.bmw, self.bmw_1, self.audi])
 
-        mock_cars.return_value = cars
-        car_service = CarsService(r'../data/cars.json')
+        self.assertEqual(1000, car_service.get_statistics_of_cars()[1][0],
+                         'Method test_get_statistics_of_cars_for_mileages return wrong values.')
+        self.assertEqual(3400, car_service.get_statistics_of_cars()[1][1],
+                         'Method test_get_statistics_of_cars_for_mileages return wrong values.')
+        self.assertEqual(5000, car_service.get_statistics_of_cars()[1][2],
+                         'Method test_get_statistics_of_cars_for_mileages return wrong values.')
 
-        self.assertEqual(1, len(car_service.cars_with_indicated_price(1200, 1800)),
-                         'Method cars_with_indicated_price return wrong values.')
-        self.assertEqual(1, len(car_service.cars_with_indicated_price(1000, 2100)),
-                         'Method cars_with_indicated_price return wrong values.')
-        self.assertEqual(3, len(car_service.cars_with_indicated_price(999, 2101)),
-                         'Method cars_with_indicated_price return wrong values.')
+    def test_get_the_most_expensive_cars(self):
+        """
+        Test get_the_most_expensive_cars method
+        """
+        car_service = CarsService([self.mazda, self.mazda_1, self.bmw, self.audi, self.peugeot])
+
+        self.assertEqual(2, len(car_service.get_the_most_expensive_cars()),
+                         'Method test_get_the_most_expensive_cars return wrong values.')
+        self.assertEqual(300, car_service.get_the_most_expensive_cars()[0].price,
+                         'Method test_get_the_most_expensive_cars return wrong values.')
+
+    def test_get_cars_with_sorted_list_of_components(self):
+        """
+        Test the get_cars_with_sorted_list_of_components method for the entered data
+        """
+        car_service = CarsService([self.ford, self.seat])
+        cars_sorted = CarsService([self.ford_1, self.seat_1])
+
+        self.assertEqual(cars_sorted.cars, car_service.get_cars_with_sorted_list_of_components(),
+                         'Method test_get_cars_with_sorted_list_of_components return wrong values.')
+
+    def test_get_components_with_cars_for_radio(self):
+        """
+        Test the get_components_with_cars method for RADIO component
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.bmw_1, self.audi, self.audi_1, self.peugeot])
+
+        self.assertEqual(4, len(car_service.get_components_with_cars()['RADIO']),
+                         'Method test_get_components_with_cars_for_radio return wrong values.')
+
+    def test_get_components_with_cars_for_abs(self):
+        """
+        Test the get_components_with_cars method for ABS component
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.bmw_1, self.audi, self.audi_1, self.peugeot])
+        self.assertEqual(3, len(car_service.get_components_with_cars()['ABS']),
+                         'Method test_get_components_with_cars_for_abs return wrong values.')
+
+    def test_get_cars_with_price_between_200_400(self):
+        """
+        Test the get_cars_with_price_between method for prices between 200 - 400
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.bmw_1, self.audi, self.audi_1, self.peugeot])
+
+        self.assertEqual(3, len(car_service.get_cars_with_price_between(200, 400)),
+                         'Method test_get_cars_with_price_between_200_400 return wrong values.')
+
+    def test_get_cars_with_price_between_300_400(self):
+        """
+        Test the get_cars_with_price_between method for prices between 300 - 400
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.bmw_1, self.audi, self.audi_1, self.peugeot])
+
+        self.assertEqual(2, len(car_service.get_cars_with_price_between(300, 400)),
+                         'Method test_get_cars_with_price_between_300_400 return wrong values.')
+
+    def test_get_list_of_values(self):
+        """
+        Test the get_list_of_values method for prices
+        """
+        car_service = CarsService([self.mazda, self.bmw, self.bmw_1, self.audi, self.audi_1, self.peugeot])
+        self.assertEqual([160, 160, 400, 160, 250, 300], car_service.get_list_of_values('price', car_service.cars),
+                         'Method test_get_list_of_values return wrong values.')
 
 
 if __name__ == '__main__':

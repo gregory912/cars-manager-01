@@ -7,7 +7,7 @@ class Color(IntEnum):
     WHITE = 3
 
     @classmethod
-    def value_of(cls, value: 'Color') -> 'Color':
+    def value_of(cls, value: str) -> 'Color':
         """
         Return an enum object for the entered string
         """
@@ -22,3 +22,4 @@ class SortType(Enum):
     MODEL = 1
     MILEAGE = 2
     PRICE = 3
+    COLOR = 4

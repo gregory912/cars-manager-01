@@ -29,3 +29,20 @@ def validate_components(text: str) -> bool:
         if not (x == ' ' or x.isalpha()):
             return False
     return True
+
+
+def validate_car(car):
+    """
+    Validate all fields for the Car class
+    """
+    if not validate_model(car.model):
+        raise ValueError("The entered model is invalid.")
+
+    if not validate_price_mileage(car.price):
+        raise ValueError("The entered price is incorrect.")
+
+    if not validate_price_mileage(car.mileage):
+        raise ValueError("The entered mileage is incorrect.")
+
+    if not validate_components(" ".join(car.components)):
+        raise ValueError("The entered components are invalid.")

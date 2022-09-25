@@ -1,12 +1,11 @@
-from car.model import Car
 import json
+from car.model import Car
 
 
-def get_cars(filename: str) -> list[Car]:
+def get_cars(filename: str) -> list:
     """
     Get data from json file and return list of Car objects
     """
-    with open(filename, 'r') as json_file:
+    with open(filename) as json_file:
         json_data = json.load(json_file)
-        return [Car(**data) for data in json_data]
-
+        return [Car.get_model(data) for data in json_data]
